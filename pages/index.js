@@ -135,7 +135,7 @@ export default function Home({questions}) {
             const total = totalValues();
             const percentage = Math.round((100 * c.value) / total)
             if (i > 2) { return}
-            if (c.value <= 0) { return <p></p>}
+            if (c.value <= 0) { return}
             return  <>
               <p 
               key={c.name}
