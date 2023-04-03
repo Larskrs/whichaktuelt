@@ -63,17 +63,18 @@ export default function Home({questions}) {
   const router = useRouter()
 
 
+
   const [id, setId] = useState(0)
   const [winner, setWinner] = useState()
   const [characters, setCharacters] = useState([
-    { name: 'jesper', value: 0, quote: 'Bjew! Bjef... Solsikkefrø', avatar: `/images/background/jesper.jpg`, image: '/images/background/jesper.jpg'},
-    { name: "carl", value: 0, quote: "Aktuelt today?", image: '/images/background/carl.jpg'},
-    { name: "olav", value: 0, image: '/images/background/olav.jpg'},
-    { name: "lars", value: 0, quote: 'You & I make cool stuff with computers.', image: '/images/background/lars.gif' },
-    { name: "lucas", value: 0, image: '/images/background/lucas.jpg' },
-    { name: 'daniel', value: 0, quote: 'Still like underaged children, nice website.', avatar: `/images/members/daniel.gif`, image: '/images/background/daniel.jpg'},
-    { name: "levin", value: 0,  image: 'https://gyazo.com/414d42e3737f7f21768bb209af4b37a1.gif' },
-    { name: "kristoffer", value: 0, image: '/images/background/kristoffer.jpg' }
+    { factors: [], name: 'jesper', value: 0, quote: 'Bjew! Bjef... Solsikkefrø', avatar: `/images/background/jesper.jpg`, image: '/images/background/jesper.jpg'},
+    { factors: [], name: "carl", value: 0, quote: "Aktuelt today?", image: '/images/background/carl.jpg'},
+    { factors: [], name: "olav", value: 0, image: '/images/background/olav.jpg'},
+    { factors: [], name: "lars", value: 0, quote: 'You & I make cool stuff with computers.', image: '/images/background/lars.gif' },
+    { factors: [], name: "lucas", value: 0, image: '/images/background/lucas.jpg' },
+    { factors: [], name: 'daniel', value: 0, quote: 'Still like underaged children, nice website.', avatar: `/images/members/daniel.gif`, image: '/images/background/daniel.jpg'},
+    { factors: [], name: "levin", value: 0,  image: 'https://gyazo.com/414d42e3737f7f21768bb209af4b37a1.gif' },
+    { factors: [], name: "kristoffer", value: 0, image: '/images/background/kristoffer.jpg' }
   ])
   const [history, setHistory] = useState([])
 
@@ -90,11 +91,24 @@ export default function Home({questions}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.container} key={winner} style={winner ? {background: `url(${characters.filter(c => c.name === winner)[0].image})`} : {} }></div>
+      <div className={styles.container} key={winner} style={winner ? {background: `url(${characters.filter(c => c.name === winner)[0].image})`} : {} }>
+        {id >= questions.length && <img src={`https://img1.picmix.com/output/stamp/normal/3/5/8/7/1257853_a60ef.gif`} style={{objectFit: `cover`, opacity: `.125`}} loading={'eager'} height={`100%`} width={`100%`}/> }
+      </div>
       <main className={styles.main} >
-      <CustomProgressBar className={styles.progress} color={`linear-gradient(90deg, var(--yellow) 0%, var(--purple) 100%);`} completed={Math.round((100 * id) / questions.length)} />
-      {charactersShow()}
+      <audio src="/music/background.mp3" id='audio' />
+      <CustomProgressBar className={styles.progress} color={`linear-gradient(90deg, var(--yellow) 0%, var(--purple) 100%)`} completed={Math.round((100 * id) / (questions.length))} />
+
+      {id < questions.length && charactersShow()}
         
+        <div className={styles.questions}>
+        <span style={{translate: `0px ${id * 20}px`}} className={styles.blip}>{">"}</span>
+          
+          {questions.map((q, i) => {
+            return (<p  onClick={() => {setId(i)}} style={questions.indexOf(q) != id ? {opacity: 0.25} : {color: `var(--Tea)`}} key={q.prompt}>{q.prompt}</p>)
+          })}
+
+          <p style={id == questions.length ? {color: `var(--Tea)`} : {opacity: `.25`}}>Ending</p>
+        </div>
 
 
       { id <= questions.length && <h1>How Aktuelt are you?</h1> }
@@ -104,18 +118,14 @@ export default function Home({questions}) {
             <div key={winner} className={styles.winner}>
               <h1>You are {winner ? capitalizeFirst(winner) : "..."}</h1>
               {winner && <p>{getQuote(winner)}</p> }
-              <Image src={getAvatar(winner)} style={{objectFit: `contain`}} width={750} loading={'eager'} height={550}/>
+              <Image src={getAvatar(winner)} width={550} style={{objectFit: `cover`}} loading={'eager'} height={550}/>
+              {displayFactors(winner)}
             </div>
 
         }
-        <div className={styles.questions}>
-          
-          {questions.map((q, i) => {
-            return (<p  onClick={() => {setId(i)}} style={questions.indexOf(q) != id ? {opacity: 0.25} : {}} key={q.prompt}>{q.prompt} {questions.indexOf(q) == id ? "<" : ""}</p>)
-          })}
-        </div>
 
         {id != NaN && id < questions.length  && <div key={id}>{questionShow()}</div>}
+        
           
 
        
@@ -126,7 +136,7 @@ export default function Home({questions}) {
 
   function charactersShow() {
 
-    if (id >= questions.length) { return; }
+    // if (id >= questions.length) { return; }
 
     return (
        <div className={styles.characters}>
@@ -134,24 +144,28 @@ export default function Home({questions}) {
 
             // if ( c.value <= 0) { return  }
             const opacity = (-1^i) * .25 + 1 + .25
+            const pos = `0px ${i*25}px`
             const total = totalValues();
             const percentage = Math.round((100 * c.value) / total)
-            if (i > 2) { return}
+            if (i > 3) { return}
             if (c.value <= 0) { return}
             return  <>
               <p 
               key={c.name}
-              onClick={() => {characters.map((char) => { char.value = (char.name === c.name) ? 999 : 0}); setId(999); setWinner(c.name)}}
-              style={{opacity: opacity}}
+              onClick={() => {characters.map((char) => { char.value = (char.name === c.name) ? questions.length : 0}); setId(questions.length); setWinner(c.name)}}
+              style={{opacity: opacity, translate: pos}}
               >{capitalizeFirst(c.name)} { percentage >= 100 ? 100 : percentage }%</p>
               </>
           } )}
+
         </div> 
     )
   }
 
 
   function questionShow() {
+
+    
 
     const question = questions[id]
 
@@ -164,7 +178,7 @@ export default function Home({questions}) {
         <h2>{question.prompt}</h2>
         <div className={styles.answers}>
         {answers.map((a, i) => {
-          return (<div style={{animationDelay: `${i * 500}ms`}} key={i} className={styles.answer} onClick={(event) => {handleValueChange(a.values); }}>{a.prompt}</div>)
+          return (<div style={{animationDelay: `${i * 500}ms`}} key={i} className={styles.answer} onClick={(event) => {handleValueChange(a); }}>{a.prompt}</div>)
         })}
         </div>
       </div>
@@ -189,23 +203,28 @@ export default function Home({questions}) {
 
   }
 
-  function handleValueChange (values) {
+  function handleValueChange (answer) {
+    const {values, prompt} = answer
 
     values.forEach(v => {
-      handleCharacter(v.name, v.value)
+      handleCharacter(v.name, v.value, prompt)
     });
-    function handleCharacter (name, value) {
 
-    const character = characters.filter(c => c.name === name)[0]
-    character.value = character.value + value;
-    setCharacters([...characters.filter(c => c.name !== name), character])
-    
-    setId(id + 1)
 
-  } 
-  findWinner()
-  
+    function handleCharacter (name, value, prompt) {
+
+      let character = characters.filter(c => c.name === name)[0]
+      character.value = character.value + value;
+      character.factors.push({value: value, question: id, prompt: prompt})
+      setCharacters([...characters.filter(c => c.name !== name), character])
+      
+      setId(id + 1)
+      characters.map(char => console.dir(char.factors))
+
+    } 
+    findWinner()
 }
+
 function findWinner () {
   let top = 0
   
@@ -214,6 +233,11 @@ function findWinner () {
       setWinner(c.name)
       top = c.value
     }
+
+    if (id >= questions.length) {
+      document.getElementById('audio').play()
+    }
+
   })
 
 }
@@ -249,6 +273,51 @@ function getGreatestValue () {
       return str2
 
     }
+
+    function getFactors (name) {
+      if (!winner) { return; }
+      const character = characters.filter(c => c.name === name)[0]
+      const factors = character.factors.map(f => {
+        const question = questions.at(f.question)
+        return {question, id: f.question, value: f.value, prompt: f.prompt}
+      })
+      console.log({factors})
+      return factors;
+
+    }
+    function displayFactors (winner) {
+      if (!winner) { return; }
+        const factors = getFactors(winner)
+
+        return (
+
+          <div className={styles.factors}>
+            <p>Factors:</p>
+            {factors.map(f => {
+
+              return (
+                <div className={styles.factor}>
+                  <p>{f.question.prompt} {displayFactorChange(f.value, f.prompt)}</p>
+                </div>
+              )
+            })}
+          </div>
+        )
+    }
+    function displayFactorChange (value, prompt) {
+
+      if (value > 0) {
+        return (<span style={{color: `var(--Tea)`}} className={styles.factor} >+{value} {prompt}</span>)
+      } else {
+        return (<span style={{color: `var(--Pink)`}} className={styles.factor} >{value} {prompt}</span>)
+      }
+
+    }
+
+
+
+
+
   }
 
 

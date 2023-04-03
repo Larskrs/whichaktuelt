@@ -10,7 +10,7 @@
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   opacity: .5;
   z-index: 1;
   animation: slooth 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -31,8 +31,6 @@
   gap: 1rem;
   position: relative;
   z-index: 10;
-  max-height: 100vh;
-  overflow: hidden;
 
 }
 
@@ -42,32 +40,82 @@
   width: 200px;
   top: 2rem;
 }
+.characters p {
+  position: relative;
+  display: flex;
+}
+.blip {
+  transition: all 1s ease-in-out;
+  position: absolute;
+  width: 30px;
+  left: -20px;
+  color: var(--Tea);
+}
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    scale: 1.5;
+    left: 70px;
+    height: 0;
+  }
+  100% {
+    height: fit-content;
+    opacity: 1;
+  }
+}
+
 .characters p:first-child {
   font-size: 22px;
   font-weight: 700;
   color: var(--Tea)
 }
+.characters p {
+  position: absolute;
+  width: 200px;
+}
 
 .questions {
-  position: absolute;
+  position: fixed;
   right: 2rem;
   top: 2rem;
+}
+.questions p {
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  color: white;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 .winner {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  padding-bottom: 8rem;
+  backdrop-filter: blur(10px);
+
+  animation: winnerMain 10s 0s cubic-bezier(0.075, 0.82, 0.165, 1) forwards
 }
 .winner img {
-  animation: winner 10s cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation: winner 10s 0s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+  border-radius: 20px;
+  opacity: 0;
+  object-fit: cover;
+  position: relative;
 }
 .winner h1 {
   opacity: 0;
-  animation: winnerTitle 5s 0s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+  animation: winnerTitle 5s 0s cubic-bezier(0.075, 0.82, 0.165, 1) forwards
 }
 .winner p {
-  max-width: 30%;
   font-size: 20px;
+  padding: .25rem;
 }
 .progress {
   position: fixed;
@@ -86,6 +134,22 @@
     scale: .5;
     opacity: .05;
   }
+  100% {
+    opacity: 1;
+    sclale: 1;
+  }
+
+
+}
+@keyframes winnerMain {
+  0%, 90% {
+    backdrop-filter: blur(10px);
+    scale: 1.05;
+  }
+  100% {
+    backdrop-filter: blur(0px);
+    scale: .8;
+  }
 
 
 }
@@ -93,16 +157,19 @@
   
   
   20% {
-    scale: 0;
+    scale: 0.1;
     opacity: 0;
+    max-height: 20px;
   }
   50%, 80% {
     scale: 3;
+    max-height: 120px;
   }
   100% {
       opacity: 1;
       scale: 2;
       margin-bottom: 20px;
+      max-height: 120px;
   }
 
 }
@@ -219,5 +286,34 @@
   }
 
 
+}
+
+
+.factors {
+
+  overflow: hidden;
+  margin-top: 1rem;
+  height: fit-content;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.0);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.8px);
+  -webkit-backdrop-filter: blur(4.8px);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 5px;
+
+  transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation: slideIn 2s 10s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+  height: 50px;
+  opacity: 0;
+}
+
+.factor {
+
+}
+.factor p {
+  
 }
 
