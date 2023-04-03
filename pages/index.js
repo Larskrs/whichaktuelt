@@ -296,7 +296,7 @@ function getGreatestValue () {
             {factors.map(f => {
 
               return (
-                <div className={styles.factor}>
+                <div key={f.id} className={styles.factor}>
                   <p>{f.question.prompt} {displayFactorChange(f.value, f.prompt)}</p>
                 </div>
               )
