@@ -123,19 +123,10 @@
                {
                   "name":"lucas",
                   "value":4
-               }
-            ]
-         },
-         {
-            "prompt":"No",
-            "values":[
-               {
-                  "name":"lucas",
-                  "value":-4
                },
                {
                   "name":"olav",
-                  "value":-1
+                  "value":-3
                },
                {
                   "name":"daniel",
@@ -148,6 +139,31 @@
                {
                   "name":"kristoffer",
                   "value":-4
+               }
+            ]
+         },
+         {
+            "prompt":"No",
+            "values":[
+               {
+                  "name":"lucas",
+                  "value":-4
+               },
+               {
+                  "name":"olav",
+                  "value":1
+               },
+               {
+                  "name":"daniel",
+                  "value":3
+               },
+               {
+                  "name":"lars",
+                  "value":4
+               },
+               {
+                  "name":"kristoffer",
+                  "value":4
                }
             ]
          }

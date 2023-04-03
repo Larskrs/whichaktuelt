@@ -69,7 +69,7 @@ export default function Home({questions}) {
   const [characters, setCharacters] = useState([
     { factors: [], name: 'jesper', value: 0, quote: 'Bjew! Bjef... Solsikkefrø', avatar: `/images/background/jesper.jpg`, image: '/images/background/jesper.jpg'},
     { factors: [], name: "carl", value: 0, quote: "Aktuelt today?", image: '/images/background/carl.jpg'},
-    { factors: [], name: "olav", value: 0, image: '/images/background/olav.jpg'},
+    { factors: [], name: "olav", value: 0, quote: 'Not a racist, just a nihilist', image: '/images/background/olav.jpg'},
     { factors: [], name: "lars", value: 0, quote: 'You & I make cool stuff with computers.', image: '/images/background/lars.gif' },
     { factors: [], name: "lucas", value: 0, image: '/images/background/lucas.jpg' },
     { factors: [], name: 'daniel', value: 0, quote: 'Still like underaged children, nice website.', avatar: `/images/members/daniel.gif`, image: '/images/background/daniel.jpg'},
@@ -118,7 +118,7 @@ export default function Home({questions}) {
             <div key={winner} className={styles.winner}>
               <h1>You are {winner ? capitalizeFirst(winner) : "..."}</h1>
               {winner && <p>{getQuote(winner)}</p> }
-              <Image src={getAvatar(winner)} width={550} style={{objectFit: `cover`}} loading={'eager'} height={550}/>
+              <Image src={getAvatar(winner)} width={550} style={{objectFit: `cover`}} loading={'eager'} height={750}/>
               {displayFactors(winner)}
             </div>
 
