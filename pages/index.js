@@ -38,13 +38,13 @@ async function fetchAsync (url) {
 
 export async function getServerSideProps (ctx) {
 
-  let questions = await fetchAsync("http://" + ctx.req.headers.host + "/api/v1/questions")
+  let questions = await fetchAsync(process.env.NEXT_URL + "/api/v1/questions")
 
   const starter = questions.result.shift();
   questions.result = shuffle(questions.result)
   questions.result.splice(0, 0, starter);
 
-  console.log({questions: questions.result})
+  // console.log({questions: questions.result})
 
 
   return {
