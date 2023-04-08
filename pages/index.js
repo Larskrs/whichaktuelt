@@ -168,6 +168,7 @@ export default function Home({questions}) {
     
 
     const question = questions[id]
+    const author = getAuthor(id)
 
     const answers = question.answers
 
@@ -176,6 +177,7 @@ export default function Home({questions}) {
         
         <p>{id}/{questions.length}</p>
         <h2>{question.prompt}</h2>
+        {author && <p>Created by: {author}</p>}
         <div className={styles.answers}>
         {answers.map((a, i) => {
           return (<div style={{animationDelay: `${i * 500}ms`}} key={i} className={styles.answer} onClick={(event) => {handleValueChange(a); }}>{a.prompt}</div>)
@@ -201,6 +203,11 @@ export default function Home({questions}) {
       return character.quote
     }
 
+  }
+  function getAuthor (id) {
+    const question = questions.at(id)
+
+    return question?.author
   }
 
   function handleValueChange (answer) {

@@ -33,6 +33,16 @@
   z-index: 10;
 
 }
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+}
 
 .characters {
   position: absolute;

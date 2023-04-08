@@ -947,6 +947,31 @@
                      }
                 
                     ]
-                    }
+                    },
+                    {
+                     "prompt": "Ass or Tit?",
+                     "author": "Lars",
+                     "answers": [
+                        {
+                           "prompt": "Tit",
+                           "values": [
+                              {
+                                 "name": "kristoffer",
+                                 "value": 2
+                              }
+                           ]
+                        },
+                        {
+                           "prompt": "Ass",
+                           "values": [
+                              {
+                                 "name": "jesper",
+                                 "value": 0
+                              }
+                           ]
+                        }
+                     ]
+                  }
+
             
 ]
